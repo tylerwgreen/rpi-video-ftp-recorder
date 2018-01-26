@@ -1,4 +1,4 @@
-# Video Recorder Player
+# Video Recorder
 
 ## Raspberry Pi project
 
