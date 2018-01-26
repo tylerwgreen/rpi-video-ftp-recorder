@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Video Recorder
+Comment=Video Recorder
+Icon=/home/pi/video-recorder/assets/icon/video-recorder-icon.png
+Exec=/home/pi/video-recorder/bin/startup
+Type=Application
+Encoding=UTF-8
+Terminal=true
+Categories=None;
