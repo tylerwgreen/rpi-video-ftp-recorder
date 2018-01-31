@@ -1,8 +1,0 @@
------ Adjust Exposure -----
-
-/home/pi/video-recorder-player/bin/camera-align
-/home/pi/video-recorder-player/bin/camera-preview
-/home/pi/video-recorder-player/bin/camera-record
-
------ Play Video File -----
-omxplayer __FILENAME__

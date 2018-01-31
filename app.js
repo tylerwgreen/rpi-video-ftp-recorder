@@ -18,9 +18,9 @@ var address = '127.0.0.1';
 // var address = 'abqjournal.com';
 var port = 5000;
 var timeoutMins	= 60;
-var styling	= false;
+var styling	= false; // configures the app to not run any bash scripts
 // var styling	= true;
-var stylingTimeout = 1000;
+var stylingTimeout = 1000; // how quickly the app moves from ui pages/events during styling
 var paths	= {
 	app:	path.join(__dirname, 'app'),
 	models:	path.join(__dirname, 'app/models'),
@@ -31,29 +31,23 @@ var paths	= {
 	audio:	path.join(__dirname, 'assets/audio/music'),
 	video:	{
 		recordings:	path.join(__dirname, 'assets/video/recordings'),
-		converted:	{
-			new:	path.join(__dirname, 'assets/video/new'),
-			old:	path.join(__dirname, 'assets/video/old'),
-		}
-		// consent:	path.join(__dirname, 'assets/video/recordings/consent'),
-		// deletable:	path.join(__dirname, 'assets/video/recordings/deletable'),
-		// noConsent:	path.join(__dirname, 'assets/video/recordings/no-consent'),
+		converted:	path.join(__dirname, 'assets/video/recordings/converted'),
 	}
 };
 var durations = {
-	preview: 9000,
-	record: 9000,
-	finish: 9000
-	// preview: 1000,
-	// record: 1000,
-	// finish: 1000
+	preview:	9000, // length of recording preview
+	record:		9000, // length of recording
+	finish:		30000, // length of playback review
+	// preview:	1000,
+	// record:		1000,
+	// finish:		1000
 };
 var logger = {
 	debug: true,
 	// debug: false,
-	// format: 'combined',	// DEFAULT - Standard Apache combined log output.
-	// format: 'tiny',		// The minimal output.
-	format: 'dev',		// Concise output colored by response status for development use.
+	// format: 'combined', // DEFAULT - Standard Apache combined log output.
+	// format: 'tiny', // The minimal output.
+	format: 'dev', // Concise output colored by response status for development use.
 	options: {
 		skip: function(req, res){
 			// only log error responses
@@ -74,7 +68,7 @@ var logger = {
  * Load and initialize models
  */
 console.log('Load models');
-var FTP				= require(path.join(paths.models, 'FTP'));
+var FTPClient		= require(path.join(paths.models, 'FTPClient'));
 var Audio			= require(path.join(paths.models, 'Audio'));
 var RecordParams	= require(path.join(paths.models, 'RecordParams'));
 var Camera			= require(path.join(paths.models, 'Camera'));
@@ -83,30 +77,36 @@ var VideoPlayer		= require(path.join(paths.models, 'VideoPlayer'));
 var Quitter			= require(path.join(paths.models, 'Quitter'));
 
 console.log('Initialize models');
-/* FTP.init({
-}); */
+FTPClient.init({
+	watchTimer:	9000,
+	watchDir:	paths.video.converted,
+	remoteIPs: [
+		'123.456.789.0',
+	]
+});
 /* Audio.init({
-	binDir: dirs.bin,
-	audioDir: dirs.audio
+	binDir:				dirs.bin,
+	audioDir:			dirs.audio
 }); */
 /* Camera.init({
-	binDir: dirs.bin,
-	recordingsDir: dirs.video.recordings,
-	previewDuration: durations.preview,
-	recordDuration: durations.record
+	binDir:				dirs.bin,
+	recordingsDir:		dirs.video.recordings,
+	previewDuration:	durations.preview,
+	recordDuration:		durations.record
 }); */
 /* VideoConverter.init({
-	binDir: dirs.bin,
-	recordingsDir: dirs.video.recordings,
-	convertedDir: dirs.video.converted.new
+	binDir:				dirs.bin,
+	recordingsDir:		dirs.video.recordings,
+	convertedDir:		dirs.video.converted.new
 }); */
 /* VideoPlayer.init({
-	binDir:			dirs.bin,
-	convertedDir:	dirs.video.converted.new
+	binDir:				dirs.bin,
+	convertedDir:		dirs.video.converted.new
 }); */
 /* Quitter.init({
-	binDir: dirs.bin
+	binDir:				dirs.bin
 }); */
+return;
 
 /**
  * Start app
